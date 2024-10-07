@@ -6,3 +6,7 @@ Yearly Sales by Color = ADDCOLUMNS( Sales,"Product Color", RELATED(Products[Colo
 #ADD NEW COLUMN  
 Qtr = QUARTER('Date'[Date])
 short Month = LEFT('Date'[Month], 3)
+
+# Create a measure using a DAX query
+Total Revenue = SUMX(Sales, Sales[Quantity] * Sales[Unit Price])
+
