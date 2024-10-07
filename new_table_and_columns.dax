@@ -7,6 +7,16 @@ Yearly Sales by Color = ADDCOLUMNS( Sales,"Product Color", RELATED(Products[Colo
 Qtr = QUARTER('Date'[Date])
 short Month = LEFT('Date'[Month], 3)
 
-# Create a measure using a DAX query
+# Create measure using a DAX query
+Total Revenue = SUMX(Sales, Sales[Quantity] * Sales[Unit Price])
+
+Black Road Bikes Sales = CALCULATE ([Total Revenue],Products[Subcategory] = "Road Bikes",Products[Color] = "Black")
+
+Non-US Sales = CALCULATE ([Total Revenue],FILTER ( Region, Region[Country] <> "United States" ))
+
+Non-US Sales 2 = CALCULATE (SUMX ( Sales, Sales[Unit Price] * Sales[Quantity] ),FILTER ( Region, Region[Country] <> "United States" ))
+
+Sales by Sales Managers = CALCULATE ([Total Revenue],FILTER ( Salesperson, CONTAINSSTRING ( Salesperson[Title], "Manager" ) ))
+
 Total Revenue = SUMX(Sales, Sales[Quantity] * Sales[Unit Price])
 
