@@ -1,0 +1,28 @@
+August Sales by Shipping date = CALCULATE (SUM(Sales[Sales Amount]),FILTER('Date', 'Date'[Month] = "August"),USERELATIONSHIP(Sales[Shipping Date], 'Date'[Date]))
+
+#TIME INTELLIGENCE
+
+#CREATING A DATE TABLE
+
+Date = CALENDAR ( DATE( 2017, 1, 1 ), DATE ( 2021, 12, 31 ))
+
+#ADDING NEW COLUMNS
+
+Month = FORMAT ( 'Date'[Date], "MMMM" )
+Month Number = MONTH ( 'Date'[Date] )
+Day of the Week = FORMAT ( WEEKDAY( 'Date'[Date] ), "dddd" )
+Week Number = WEEKNUM ( 'Date'[Date])
+# Mark as date table
+#cREATE RELATIONSHIP
+
+
+
+
+
+Revenue = SUMX('Sales', Sales[Unit Price] *Sales[Quantity])
+
+RevenuePY = VAR RevenuePreviousYear = CALCULATE([Revenue], SAMEPERIODLASTYEAR('Sales'[OrderDate].[Date]))
+ RETURN RevenuePreviousYear
+
+Revenue YoY % = VAR RevenuePreviousYear =CALCULATE ([Revenue], SAMEPERIODLASTYEAR (Sales[OrderDate].[Date]))
+RETURN DIVIDE([Revenue] - RevenuePreviousYear, RevenuePreviousYear)
